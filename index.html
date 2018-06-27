@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Library</title>
+	<meta name="viewport" content="width=device-width,
+initial-scale=1, shrink-to-fit=no" />
+	<link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/boots
+trap.min.css" />
+<link rel="stylesheet" type="text/css" href="cssfile.css">
+</head>
+<body>
+	
+	<div class="col text-center text_color text_display">
+		<h1 id="bookDisplay" style="padding-bottom: 100px"></h1>
+	</div>	
+
+	<div class="row">
+		<div class="col text-center" style="padding-bottom: 20px">
+			<input id="student" type="text" placeholder="Lendee Name">
+			<input id="books" type="text" placeholder="Enter Book">
+			<input id="author" type="text" placeholder="Enter Author">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col text-center" style="padding-bottom: 60px">
+			<input onclick="addData();showData();" type="button" value="Add to Database">
+
+			<input onclick="removeData();showData();" type="button" value="Remove from Database">
+
+			<input onclick="readUnread()" type="button" value="Toggle Read/Unread">
+
+			<input onclick="pullData()" type="button" value="Look up">
+
+			<input onclick="clearFunction()" type="button" value="Clear">
+		</div>
+	</div>		
+     
+	<div class="col text_color text_display">
+		<p id = "infoDisplay" ></p>
+	</div>	
+	
+	<script type="text/javascript">
+		var bookArray = [];		
+
+		function info(){
+			return {
+				name: document.getElementById("student").value,
+				books: document.getElementById("books").value,  
+				author: document.getElementById("author").value,
+				dateModified: new Date().toString(),
+				readStatus: 'Unread'
+			};
+		}
+
+		function addData(){
+			addFunction();
+			if(addFunction() != false){
+				bookArray.push( info() );
+				alert('Books for ' + document.getElementById("student").value + ' added');
+				recordAdd();
+			}
+		}
+
+		function removeData(){
+			removeCheck();
+			if (removeCheck() == false){
+			    alert('Books for '+ document.getElementById("student").value +' removed');
+				recordRemove();
+			    removeFunction();
+				
+			}
+		}
+
+		function recordAdd(){
+			
+
+			for(var i=0; i<bookArray.length; i++){
+				console.log(bookArray[i].name + ' has added  ' + 
+					bookArray[i].books + '. Added on '+ bookArray[i].dateModified)
+			}
+		}
+
+		function recordRemove(){
+			
+
+			for(var i=0; i<bookArray.length; i++){
+				console.log(bookArray[i].name + ' has removed  ' +
+					bookArray[i].books + '. Removed on '+ bookArray[i].dateModified)
+			}
+		}
+
+		function showData(){
+			
+			document.getElementById('bookDisplay').innerHTML = '';
+			
+			document.getElementById('bookDisplay').innerHTML+= 
+					'Books In Inventory: ' + bookArray.length
+	
+		}
+
+		function pullData(){	
+
+			document.getElementById('infoDisplay').innerHTML = '';	
+			for(var i =0; i< bookArray.length; i++){	
+				
+
+						document.getElementById('infoDisplay').innerHTML+= 
+						'Lendee: ' + bookArray[i].name + ' | Book Title: ' + bookArray[i].books + ' | Author: ' + bookArray[i].author + ' | Added on: ' + bookArray[i].dateModified + ' | Status: ' + bookArray[i].readStatus + "<br>"
+			}
+		}	
+	 	function readUnread(){
+	 		for(var i =0; i< bookArray.length; i++){
+	 			if (bookArray[i].name == document.getElementById("student").value && bookArray[i].books == document.getElementById("books").value && bookArray[i].author == document.getElementById("author").value && bookArray[i].readStatus == 'Unread'){
+	 				bookArray[i].readStatus = 'Read'
+
+	 			}
+
+	 			else if (bookArray[i].name == document.getElementById("student").value && bookArray[i].books == document.getElementById("books").value && bookArray[i].author == document.getElementById("author").value && bookArray[i].readStatus == 'Read'){
+	 				bookArray[i].readStatus = 'Unread'
+	 			}
+
+	 		}
+
+	 	}
+
+	 	function addFunction(){
+	 		for(var i =0; i< bookArray.length; i++){	
+				if(bookArray[i].name == document.getElementById("student").value && bookArray[i].books == document.getElementById("books").value && bookArray[i].author == document.getElementById("author").value){
+						return false;
+		  		}
+			}
+
+	 	}
+
+	 	function removeCheck(){
+	 		for(var i =0; i< bookArray.length; i++){	
+				if(bookArray[i].name == document.getElementById("student").value && bookArray[i].books == document.getElementById("books").value && bookArray[i].author == document.getElementById("author").value){
+						return false;
+		  		}
+			}
+
+	 	}  
+
+
+	 	function removeFunction(){
+	 		for(var i =0; i< bookArray.length; i++){	
+				if(bookArray[i].name == document.getElementById("student").value && bookArray[i].books == document.getElementById("books").value && bookArray[i].author == document.getElementById("author").value){
+						bookArray.splice(i,1)
+
+		  		}
+			}
+
+	 	}
+
+	 	function clearFunction(){
+	 		document.getElementById("student").value = '';
+			document.getElementById("books").value = ''; 
+			document.getElementById("author").value = '';
+	 	} 
+
+	 	showData();
+
+
+	</script>
+</body>
+</html>
